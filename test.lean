@@ -37,3 +37,11 @@
 
 #check Prop → Prop
 #check Type → Type
+
+#check [1,2,3]
+#check 3::[1,2,3]
+#check []
+#print List
+#check @List.nil Nat
+#check List.cons 3 [1,2,3]
+

@@ -1,6 +1,5 @@
-#check refl
 #check (.=.)
-#print (.=.)
+-- #print (.=.)
 -- #print (.=.)
 #check (.==.)
 
@@ -21,8 +20,11 @@ def mod7Rel (x y : Nat) : Prop :=
 theorem thm_1: mod7Rel 3 10 := rfl
 #print thm_1
 
+theorem thm_2: mod7Rel 3 10 := by
+  simp [mod7Rel]
+
 /- Example of an equality proof -/
-example: 5=3+2 := Eq.refl   -- error: missing argument a for "a = a"
+-- example: 5=3+2 := Eq.refl   -- error: missing argument a for "a = a"
 example: 5=3+2 := Eq.refl 5 -- concrete value for a 
 example: 5=3+2 := Eq.refl _ -- auto unification for a; in order to prove 5=5, a should be obviously 5.
 
@@ -48,3 +50,17 @@ end
 #check @congrArg
 #check congrArg id (Eq.refl 5)
 #check @congrFun
+
+#check @Equivalence
+#print Equivalence
+
+theorem thm_3 : Equivalence mod7Rel := 
+by
+  constructor
+  intros; rfl
+  intro x y p1
+  simp [ mod7Rel ] at *
+  rw [ p1 ]
+  intro x y z hxy hyz
+  simp [mod7Rel] at *
+  apply Eq.trans hxy hyz
